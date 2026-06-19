@@ -88,3 +88,62 @@ build/
 # MISC
 # =========================
 coverage/
+
+# =========================
+# FLUTTER / DART
+# =========================
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# =========================
+# GENERATED FILES
+# =========================
+**/GeneratedPluginRegistrant.*
+**/Flutter/ephemeral/
+
+# =========================
+# ANDROID
+# =========================
+android/.gradle/
+android/app/build/
+
+# =========================
+# IOS
+# =========================
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.podspec
+ios/Flutter/ephemeral/
+
+# =========================
+# MACOS
+# =========================
+macos/Flutter/ephemeral/
+
+# =========================
+# WINDOWS
+# =========================
+windows/flutter/ephemeral/
+
+# =========================
+# LINUX
+# =========================
+linux/flutter/ephemeral/
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# SYSTEM FILES
+# =========================
+.DS_Store
+Thumbs.db
