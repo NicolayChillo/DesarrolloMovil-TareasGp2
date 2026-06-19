@@ -6,7 +6,10 @@ import 'solicitudes_screen.dart';
 import 'admin_gate_screen.dart';
 import '../providers/mascotas_provider.dart';
 import '../providers/solicitudes_provider.dart';
-import '../providers/navigation_provider.dart'; // ✅ Nuevo import
+import '../providers/navigation_provider.dart';
+
+// IMPORTA TU COLOR SI ESTÁ EN OTRO ARCHIVO
+ import '../../../core/theme/colores_app.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -40,14 +43,18 @@ class _MainScreenState extends State<MainScreen> {
                 IconButton(
                   icon: const Icon(Icons.refresh),
                   onPressed: () {
-                    context.read<MascotasProvider>().cargarMascotasDisponibles();
+                    context
+                        .read<MascotasProvider>()
+                        .cargarMascotasDisponibles();
                   },
                 ),
               if (navProvider.selectedIndex == 1)
                 IconButton(
                   icon: const Icon(Icons.refresh),
                   onPressed: () {
-                    context.read<SolicitudesProvider>().cargarTodasLasSolicitudes();
+                    context
+                        .read<SolicitudesProvider>()
+                        .cargarTodasLasSolicitudes();
                   },
                 ),
             ],
@@ -62,8 +69,11 @@ class _MainScreenState extends State<MainScreen> {
               navProvider.setSelectedIndex(index);
             },
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: Theme.of(context).primaryColor,
+
+            // AQUÍ EL CAMBIO
+            selectedItemColor: ColoresApp.secundario,
             unselectedItemColor: Colors.grey,
+
             selectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12,

@@ -1,7 +1,7 @@
 // core/constants/api_constants.dart
 class ApiConstants {
   // ⚠️ URL BASE - Actualiza cuando ngrok cambie
-  static const String baseUrl = 'https://consensus-syrup-bogus.ngrok-free.dev';
+  static const String baseUrl = 'https://10.40.34.100:8000';
   
   // 📋 Endpoints - CON BARRA FINAL
   static const String mascotas = '/mascotas/';
@@ -28,7 +28,7 @@ class ApiConstants {
   static String eliminarSolicitud(int id) => '$baseUrl$solicitudes$id';
   static String aprobarSolicitud(int id) => '$baseUrl$solicitudes$id/aprobar';
   static String rechazarSolicitud(int id) => '$baseUrl$solicitudes$id/rechazar';
-  
+    
   // ============================================================
   // DEBUG
   // ============================================================
