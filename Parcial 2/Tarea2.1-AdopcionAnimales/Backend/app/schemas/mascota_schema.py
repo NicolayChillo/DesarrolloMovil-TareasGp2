@@ -14,6 +14,7 @@ class MascotaBase(BaseModel):
     edad: int = Field(ge=0, le=30)
     descripcion: str = Field(min_length=5, max_length=200)
     imagen_url: Optional[str] = None
+    estado: Optional[str] = "Disponible"
 
 # Esquema para crear una nueva mascota
 class MascotaCreate(MascotaBase):
@@ -35,10 +36,8 @@ class MascotaUpdate(BaseModel):
     sexo: Optional[str] = None
     edad: Optional[int] = None
     descripcion: Optional[str] = None
-    imagen_url: Optional[str] = None
-    estado: Optional[EstadoSolicitud] = None
+    estado: Optional[EstadoMascota] = None
 
-class EstadoSolicitud(str, Enum):
-    pendiente = "Pendiente"
-    aprobada = "Aprobada"
-    rechazada = "Rechazada"
+class EstadoMascota(str, Enum):
+    disponible = "Disponible"
+    adoptada = "Adoptada"

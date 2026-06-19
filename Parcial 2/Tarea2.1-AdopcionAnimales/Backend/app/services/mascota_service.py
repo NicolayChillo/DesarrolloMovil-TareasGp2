@@ -12,7 +12,12 @@ class MascotaService:
 
     # Metodo para obtener todas las mascotas
     @staticmethod
-    def get_all_mascotas(db: Session):
+    def get_all_mascotas(
+        db: Session, 
+        skip: int = 0, 
+        limit: int = 100, 
+        estado: Optional[str] = None
+    ):
         return MascotaRepository.get_all(db)
 
     # Metodo para obtener una mascota por su ID
@@ -93,14 +98,22 @@ class MascotaService:
     # Metodo para eliminar una mascota por su ID
     @staticmethod
     def delete_mascota(db: Session, mascota_id: int):
-        # Obtener la mascota para eliminar su imagen
-        mascota = MascotaRepository.get_by_id(db, mascota_id)
-        if not mascota:
-            raise HTTPException(status_code=404, detail="Mascota no encontrada")
-        
-        # Eliminar la imagen asociada si existe
-        if mascota.imagen_url:
-            ImageService.delete_image(mascota.imagen_url)
-            print(f"🗑️ Imagen eliminada: {mascota.imagen_url}")
-        
-        return MascotaRepository.delete(db, mascota_id)
+        try:
+            print(f"🗑️ Service - Eliminando mascota ID: {mascota_id}")
+            
+            mascota = MascotaRepository.delete(db, mascota_id)
+            
+            if not mascota:
+                print("❌ Mascota no encontrada en repository")
+                raise HTTPException(status_code=404, detail="Mascota no encontrada")
+            
+            print("✅ Mascota eliminada en service")
+            return mascota
+            
+        except HTTPException:
+            raise
+        except Exception as e:
+            print(f"❌ Error en delete_mascota service: {e}")
+            import traceback
+            traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))

@@ -10,8 +10,16 @@ class MascotaRepository:
 
     # Metodo para obtener todas las mascotas
     @staticmethod
-    def get_all(db: Session):
-        return db.query(Mascota).all()
+    def get_all(
+        db: Session, 
+        skip: int = 0, 
+        limit: int = 100, 
+        estado: Optional[str] = None
+    ):
+        query = db.query(Mascota)
+        if estado:
+            query = query.filter(Mascota.estado == estado)
+        return query.offset(skip).limit(limit).all()
 
     # Metodo para obtener una mascota por su ID
     @staticmethod
@@ -59,10 +67,24 @@ class MascotaRepository:
     # Metodo para eliminar una mascota por su ID
     @staticmethod
     def delete(db: Session, mascota_id: int):
-        mascota = db.query(Mascota).filter(Mascota.id == mascota_id).first()
-
-        if mascota:
+        try:
+            print(f"🗑️ Repository - Eliminando mascota ID: {mascota_id}")
+            
+            mascota = db.query(Mascota).filter(Mascota.id == mascota_id).first()
+            
+            if not mascota:
+                print("❌ Mascota no encontrada en repository")
+                return None
+            
+            print(f"📦 Mascota encontrada: {mascota.nombre} (ID: {mascota.id})")
+            
             db.delete(mascota)
             db.commit()
-
-        return mascota
+            print("✅ Mascota eliminada en repository")
+            
+            return mascota
+            
+        except Exception as e:
+            print(f"❌ Error en repository delete: {e}")
+            db.rollback()
+            raise

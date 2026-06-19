@@ -1,6 +1,6 @@
 
-import '../entities/mascota.dart';
-import '../repositories/mascota_repository.dart';
+import '../../entities/mascota.dart';
+import '../../repositories/mascota_repository.dart';
 
 class ObtenerMascotasUseCase {
   final MascotaRepository repository;

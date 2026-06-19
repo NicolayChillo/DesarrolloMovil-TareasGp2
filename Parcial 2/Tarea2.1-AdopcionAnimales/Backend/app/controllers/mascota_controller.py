@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from typing import Optional
 
 from app.database import get_db
+from app.models.mascota_model import Mascota 
 from app.services.mascota_service import MascotaService
 from app.schemas.mascota_schema import MascotaCreate, MascotaUpdate
 
@@ -113,11 +114,45 @@ def update_mascota(
     return MascotaService.update_mascota(db, mascota_id, mascota_update, file)
 
 # 🗑️ Eliminar una mascota
+# app/controllers/mascota_controller.py
 def delete_mascota(
     mascota_id: int,
     db: Session = Depends(get_db)
 ):
-    return MascotaService.delete_mascota(db, mascota_id)
+    try:
+        print("=" * 60)
+        print(f"🗑️ DELETE MASCOTA ID: {mascota_id}")
+        print("=" * 60)
+        
+        # Verificar que la mascota existe
+        mascota = db.query(Mascota).filter(Mascota.id == mascota_id).first()
+        print(f"📦 Mascota encontrada: {mascota}")
+        
+        if not mascota:
+            print("❌ Mascota no encontrada")
+            raise HTTPException(status_code=404, detail="Mascota no encontrada")
+        
+        # Eliminar imagen si existe
+        if mascota.imagen_url:
+            print(f"🗑️ Eliminando imagen: {mascota.imagen_url}")
+            # Aquí va el código para eliminar la imagen
+            # ImageService.delete_image(mascota.imagen_url)
+        
+        # Eliminar la mascota
+        db.delete(mascota)
+        db.commit()
+        print("✅ Mascota eliminada exitosamente")
+        
+        return {"message": "Mascota eliminada correctamente"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Error en delete_mascota: {e}")
+        import traceback
+        traceback.print_exc()
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error al eliminar mascota: {str(e)}")
 
 
 

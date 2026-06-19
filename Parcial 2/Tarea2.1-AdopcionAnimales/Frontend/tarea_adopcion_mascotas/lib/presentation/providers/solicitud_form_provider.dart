@@ -1,14 +1,14 @@
 // presentation/providers/solicitud_form_provider.dart
 import 'package:flutter/foundation.dart';
-import '../../core/errors/exceptions.dart';
 import '../../domain/entities/mascota.dart';
-import '../../domain/usecases/crear_solicitud_usecase.dart';
+import '../../domain/usecases/solicitudes_usecases/crear_solicitud_usecase.dart';
 
 enum EstadoEnvio { inicial, enviando, exito, error }
 
 class SolicitudFormProvider extends ChangeNotifier {
   final CrearSolicitudUseCase crearSolicitudUseCase;
-  SolicitudFormProvider(this.crearSolicitudUseCase);
+  
+  SolicitudFormProvider({required this.crearSolicitudUseCase});
 
   EstadoEnvio _estado = EstadoEnvio.inicial;
   String? _errorMessage;
@@ -27,23 +27,30 @@ class SolicitudFormProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await crearSolicitudUseCase(
+      print('📤 Enviando solicitud...');
+      print('📝 Mascota: ${mascota.nombre} (ID: ${mascota.id})');
+      print('📝 Solicitante: $nombre');
+      print('📝 Teléfono: $telefono');
+      print('📝 Comentario: $comentario');
+      
+      final result = await crearSolicitudUseCase(
         mascota: mascota,
         nombreSolicitante: nombre,
         telefono: telefono,
         comentario: comentario,
       );
+      
+      print('✅ Solicitud creada: ${result.id}');
       _estado = EstadoEnvio.exito;
       notifyListeners();
       return true;
-    } on SolicitudInvalidaException catch (e) {
-      _errorMessage = e.message; // mensaje específico de la regla violada
-    } catch (_) {
-      _errorMessage = 'No se pudo enviar la solicitud. Intenta de nuevo.';
+    } catch (e) {
+      print('❌ Error: $e');
+      _errorMessage = 'No se pudo enviar la solicitud: ${e.toString()}';
+      _estado = EstadoEnvio.error;
+      notifyListeners();
+      return false;
     }
-    _estado = EstadoEnvio.error;
-    notifyListeners();
-    return false;
   }
 
   void reset() {

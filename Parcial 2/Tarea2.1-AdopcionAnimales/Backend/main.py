@@ -17,6 +17,14 @@ app = FastAPI(
     version="1.0.0"
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Crear directorio de uploads si no existe
 if not os.path.exists(UPLOAD_DIR):
     os.makedirs(UPLOAD_DIR)

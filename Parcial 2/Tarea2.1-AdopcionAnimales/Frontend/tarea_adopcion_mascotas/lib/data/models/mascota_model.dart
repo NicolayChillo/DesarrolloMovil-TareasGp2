@@ -1,4 +1,4 @@
-
+// data/models/mascota_model.dart
 import '../../domain/entities/mascota.dart';
 
 class MascotaModel extends Mascota {
@@ -25,6 +25,29 @@ class MascotaModel extends Mascota {
       descripcion: json['descripcion'] as String?,
       imagenUrl: json['imagen_url'] as String?,
       estado: json['estado'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'nombre': nombre,
+      'especie': especie,
+      'raza': raza,
+      'sexo': sexo,
+      'edad': edad,
+      'descripcion': descripcion,
+      'imagen_url': imagenUrl,
+      'estado': estado,
+    };
+  }
+
+  // Crear modelo vacío para formulario
+  static MascotaModel empty() {
+    return const MascotaModel(
+      id: 0,
+      nombre: '',
+      especie: '',
+      estado: 'Disponible',
     );
   }
 }
