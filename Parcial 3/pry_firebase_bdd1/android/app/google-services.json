@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "416717234444",
+    "project_id": "chatcito-aaa45",
+    "storage_bucket": "chatcito-aaa45.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416717234444:android:fe2d917d74c0f42ee46929",
+        "android_client_info": {
+          "package_name": "com.company.chatcito"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnNCKczBmwhvEIzrn4vRGXc2B1_4uu44Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416717234444:android:0de12bb77ad27c3de46929",
+        "android_client_info": {
+          "package_name": "com.example.pry_firebase_bdd1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnNCKczBmwhvEIzrn4vRGXc2B1_4uu44Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
